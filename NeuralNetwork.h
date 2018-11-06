@@ -25,7 +25,7 @@ public:
 	WorkingNeuron* createNewOutput() {
 		WorkingNeuron* out = new WorkingNeuron();
 		outputNeurons.push_back(*out);
-		return out;
+		return &outputNeurons.back();
 	}
 
 	//Neuen Input erstellen

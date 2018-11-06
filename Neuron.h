@@ -8,6 +8,8 @@
 #ifndef NEURON_H_
 #define NEURON_H_
 
+#include "ActivationFunctions.h"
+
 class Neuron {
 public:
 	//Neuron();

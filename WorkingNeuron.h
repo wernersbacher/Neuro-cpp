@@ -10,12 +10,14 @@
 
 #include "Neuron.h"
 #include "Connection.h"
+#include "ActivationFunctions.h"
 #include <list>
 #include <iostream>
 
 class WorkingNeuron : public Neuron {
 
 	std::list<Connection> connections;
+	ActivationFunction* activationFunction = new Boolean;
 
 public:
 	//Berechnung aller Werte der Connections mit Gewichtung
@@ -26,7 +28,7 @@ public:
 		for(auto it = connections.begin(); it != connections.end(); ++it) {
 			sum = sum + it->getValue();
 		}
-		return sum;
+		return activationFunction->activation(sum);
 	}
 
 	void addConnection(Connection c) {

@@ -1,2 +1,2 @@
-git commit
+git commit -a
 pause
