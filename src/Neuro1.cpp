@@ -25,7 +25,7 @@ int main() {
 	InputNeuron *i3 = net.createNewInput(1);
 	InputNeuron *i4 = net.createNewInput(1);
 
-	i1->setValue(10);
+	i1->setValue(10 );
 
 	net.createHiddenNeurons(3);
 
