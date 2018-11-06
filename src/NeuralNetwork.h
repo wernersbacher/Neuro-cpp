@@ -17,7 +17,7 @@
 class NeuralNetwork {
 
 	std::list<InputNeuron> inputNeurons;
-	//std::list<WorkingNeuron> hiddenNeurons;
+	std::list<WorkingNeuron> hiddenNeurons;
 	std::list<WorkingNeuron> outputNeurons;
 public:
 	//NeuralNetwork();
@@ -36,42 +36,107 @@ public:
 		return &inputNeurons.back();
 	}
 
-	std::list<WorkingNeuron> getOutputNeurons() {
-		return outputNeurons;
+	//Neuen Hidden Neuron erstellen
+	void createHiddenNeurons(int amount) {
+		for (int i = 0; i < amount; i++) {
+			WorkingNeuron* hid = new WorkingNeuron();
+			hiddenNeurons.push_back(*hid);
+		}
+
 	}
 
 	//Alles mit allem verbinden (außer natürlich Input unter sich), also layer)
 	void createFullMesh() {
-		for(auto it_o = outputNeurons.begin(); it_o != outputNeurons.end(); ++it_o) {
-			for(auto it_i = inputNeurons.begin(); it_i != inputNeurons.end(); ++it_i) {
-				//erstellt eine neue Connection und einen Pointer,
-				// die Connection erhält als Params den Pointer auf das InputNeuron und Gewicht 0.
-				//Connection con(&(*it_i), 0);
-				//das Working/Output Neuron erhält diesen Connectionpointer zugewiesen
-				//it_o->addConnection(con);
+		//direkt output mit input
+		if (hiddenNeurons.size() == 0)
+			for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end();
+					++it_o) {
+				for (auto it_i = inputNeurons.begin();
+						it_i != inputNeurons.end(); ++it_i) {
+					//erstellt eine neue Connection und einen Pointer,
+					// die Connection erhält als Params den Pointer auf das InputNeuron und Gewicht 0.
+					Connection con(&(*it_i), 0);
+					//das Working/Output Neuron erhält diesen Connectionpointer zugewiesen
+					it_o->addConnection(con);
 
+				}
+			}
+
+		else {
+			//output mit hidden
+			for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end();
+					++it_o) {
+				for (auto it_h = hiddenNeurons.begin();
+						it_h != hiddenNeurons.end(); ++it_h) {
+					Connection con(&(*it_h), 0);
+					it_o->addConnection(con);
+
+				}
+			}
+			//hidden mit input
+			for (auto it_h = hiddenNeurons.begin(); it_h != hiddenNeurons.end();
+					++it_h) {
+				for (auto it_i = inputNeurons.begin();
+						it_i != inputNeurons.end(); ++it_i) {
+					Connection con(&(*it_i), 0);
+					it_h->addConnection(con);
+
+				}
 			}
 		}
 
 	}
 
 	void createFullMesh(std::vector<float> arr) {
-		if(arr.size() != inputNeurons.size() * outputNeurons.size()) {
-			throw "hallo";
+
+		if (hiddenNeurons.size() == 0) {
+			//1 layer
+			if (arr.size() != inputNeurons.size() * outputNeurons.size()) {
+				throw "hallo";
+			}
+			int i = 0;
+			for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end(); ++it_o) {
+				for (auto it_i = inputNeurons.begin();
+						it_i != inputNeurons.end(); ++it_i) {
+					//erstellt eine neue Connection und einen Pointer,
+					// die Connection erhält als Params den Pointer auf das InputNeuron und Gewicht aus Array
+					Connection con(&(*it_i), arr[i++]);
+					//das Working/Output Neuron erhält diesen Connectionpointer zugewiesen
+					it_o->addConnection(con);
+				}
+			}
+		} else {
+			//2 layer
+			if (arr.size() != inputNeurons.size() * hiddenNeurons.size()
+							+ hiddenNeurons.size() * outputNeurons.size()) {
+				throw "gewichte falsch";
+			}
+			int i = 0;
+			//hidden mit input
+						for (auto it_h = hiddenNeurons.begin(); it_h != hiddenNeurons.end();
+								++it_h) {
+							for (auto it_i = inputNeurons.begin();
+									it_i != inputNeurons.end(); ++it_i) {
+								Connection con(&(*it_i), arr[i++]);
+								it_h->addConnection(con);
+
+							}
+						}
+			//output mit hidden
+			for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end();
+					++it_o) {
+				for (auto it_h = hiddenNeurons.begin();
+						it_h != hiddenNeurons.end(); ++it_h) {
+					Connection con(&(*it_h), arr[i++]);
+					it_o->addConnection(con);
+
+				}
+			}
+
+
+
 		}
 
-		int i = 0;
-		for(auto it_o = outputNeurons.begin(); it_o != outputNeurons.end(); ++it_o) {
-			for(auto it_i = inputNeurons.begin(); it_i != inputNeurons.end(); ++it_i) {
-				//erstellt eine neue Connection und einen Pointer,
-				// die Connection erhält als Params den Pointer auf das InputNeuron und Gewicht aus Array
-				Connection con(&(*it_i), arr[i++]);
-				//std::cout << "InputValue: " << it_i->getValue() << std::endl;
-				//std::cout << "neue connections value:" << con.getValue() << std::endl;
-				//das Working/Output Neuron erhält diesen Connectionpointer zugewiesen
-				it_o->addConnection(con);
-			}
-		}
 	}
 
 };

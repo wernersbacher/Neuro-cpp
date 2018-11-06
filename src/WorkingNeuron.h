@@ -17,7 +17,7 @@
 class WorkingNeuron : public Neuron {
 
 	std::list<Connection> connections;
-	ActivationFunction* activationFunction = new Boolean;
+	ActivationFunction* activationFunction = new Identity;
 
 public:
 	//Berechnung aller Werte der Connections mit Gewichtung
