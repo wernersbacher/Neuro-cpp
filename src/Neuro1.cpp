@@ -11,8 +11,12 @@ using namespace std;
 
 int main() {
 	cout << "Neuronale Netze" << endl;
-
-	std::vector<float> weights = {3, -1, 2, 0};
+									//hidden mit input
+	std::vector<float> weights = {3,-1,2,0,
+									2,1,1,-1,
+									1,-3,2,1,
+									//hidden mit output
+									1,2,1};
 
 	NeuralNetwork net;
 
@@ -22,6 +26,8 @@ int main() {
 	InputNeuron *i4 = net.createNewInput(1);
 
 	i1->setValue(10);
+
+	net.createHiddenNeurons(3);
 
 	WorkingNeuron *o1 = net.createNewOutput();
 
