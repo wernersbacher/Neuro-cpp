@@ -17,6 +17,7 @@
 class NeuralNetwork {
 
 	std::list<InputNeuron> inputNeurons;
+	//std::list<WorkingNeuron> hiddenNeurons;
 	std::list<WorkingNeuron> outputNeurons;
 public:
 	//NeuralNetwork();
