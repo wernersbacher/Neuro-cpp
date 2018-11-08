@@ -61,7 +61,8 @@ public:
 	}
 
 	//Alles mit allem verbinden (außer natürlich Input unter sich), also layer)
-	void createFullMesh() {
+	void createFullMesh(bool random = false) {
+		float weight = 0;
 		//direkt output mit input
 		if (hiddenNeurons.size() == 0)
 			for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end();
@@ -70,7 +71,9 @@ public:
 						it_i != inputNeurons.end(); ++it_i) {
 					//erstellt eine neue Connection und einen Pointer,
 					// die Connection erhält als Params den Pointer auf das InputNeuron und Gewicht 0.
-					Connection con(&(*it_i), 0);
+					if(random)
+						weight = rand() % 10 - 6;
+					Connection con(&(*it_i), weight);
 					//das Working/Output Neuron erhält diesen Connectionpointer zugewiesen
 					it_o->addConnection(con);
 
@@ -83,7 +86,9 @@ public:
 					++it_o) {
 				for (auto it_h = hiddenNeurons.begin();
 						it_h != hiddenNeurons.end(); ++it_h) {
-					Connection con(&(*it_h), 0);
+					if(random)
+						weight = rand() % 10 - 6;
+					Connection con(&(*it_h), weight);
 					it_o->addConnection(con);
 
 				}
@@ -93,7 +98,9 @@ public:
 					++it_h) {
 				for (auto it_i = inputNeurons.begin();
 						it_i != inputNeurons.end(); ++it_i) {
-					Connection con(&(*it_i), 0);
+					if(random)
+						weight = rand() % 10 - 6;
+					Connection con(&(*it_i), weight);
 					it_h->addConnection(con);
 
 				}
