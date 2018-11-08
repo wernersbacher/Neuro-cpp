@@ -30,6 +30,10 @@ public:
 	float getWeight() {
 		return _weight;
 	}
+
+	void addWeight(float delta) {
+		_weight += delta;
+	}
 };
 
 #endif /* CONNECTION_H_ */

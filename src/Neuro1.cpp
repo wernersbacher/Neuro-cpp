@@ -25,18 +25,13 @@ int main() {
 	InputNeuron *i3 = net.createNewInput(1);
 	InputNeuron *i4 = net.createNewInput(1);
 
-	i1->setValue(10 );
+	i1->setValue(10);
 
 	net.createHiddenNeurons(3);
 
 	WorkingNeuron *o1 = net.createNewOutput();
 
 	net.createFullMesh(weights);
-
-	/*
-	std::list<WorkingNeuron> output = net.getOutputNeurons();
-	for(auto it_o = output.begin(); it_o != output.end(); ++it_o)
-		cout << "output[it]: " << it_o->getValue() << endl;*/
 
 	cout << "Ausgabeneuron: " << o1->getValue() << endl;
 

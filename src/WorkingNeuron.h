@@ -23,8 +23,6 @@ public:
 	//Berechnung aller Werte der Connections mit Gewichtung
 	float getValue() {
 		float sum = 0;
-		//std::cout << "connectons einträge: " << connections.size() << std::endl;
-
 		for(auto it = connections.begin(); it != connections.end(); ++it) {
 			sum = sum + it->getValue();
 		}
@@ -34,10 +32,16 @@ public:
 	void addConnection(Connection c) {
 		connections.push_back(c);
 
-		//std::cout << "neue add value:" << c.getValue() << std::endl;
-		//std::cout << "connectons einträge: " << connections.size() << std::endl;
 	}
 
+	void deltaLearning(float epsilon, float smallDelta) {
+		int i=0;
+		for(auto it = connections.begin(); it != connections.end(); ++it) {
+				//Delta wik = epsilon * delta * ak
+			float bigDelta = epsilon * smallDelta * it->getValue();
+			it->addWeight(bigDelta);
+		}
+	}
 
 };
 
