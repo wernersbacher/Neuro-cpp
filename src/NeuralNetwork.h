@@ -55,8 +55,10 @@ public:
 		int i = 0;
 		for (auto it_o = outputNeurons.begin(); it_o != outputNeurons.end(); ++it_o) {
 			float smallDelta = shoulds[i++] - it_o->getValue();
+			std::cout << ", d: " << smallDelta<< " it_o: " << it_o->getValue();
 			it_o->deltaLearning(epsilon, smallDelta);
 		}
+		std::cout << std::endl;
 
 	}
 

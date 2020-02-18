@@ -62,7 +62,7 @@ int main() {
 		weights[i] = rand() % 10 - 6;
 
 	//create full mesh
-	net.createFullMesh();
+	net.createFullMesh(weights);
 
 
 	//LOAD CSV DATA
@@ -124,7 +124,12 @@ int main() {
 */
 
 
+	cout << "Test" << endl;
 
+	for(int a = 0; a<10; a++) {
+
+		cout << outputs[a]->getValue() << endl;
+	}
 
 
 

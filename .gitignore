@@ -1,2 +1,9 @@
 #ignore o files
 *.o
+Debug/
+.settings/
+*.cmd
+*.stackdump
+*.csv
+*.project
+*.crpoject
